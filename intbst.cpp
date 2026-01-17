@@ -9,12 +9,13 @@ using std::cout;
 
 // constructor sets up empty tree
 IntBST::IntBST() { 
-
+  root = nullptr; //root null
 }
 
 // destructor deletes all nodes
 IntBST::~IntBST() {
-
+  clear(root); //clear starting from root
+  root = nullptr; //root null
 }
 
 // recursive helper for destructor
@@ -23,40 +24,83 @@ void IntBST::clear(Node *n) {
 }
 
 // insert value in tree; return false if duplicate
-bool IntBST::insert(int value) {
-    return false; // REPLACE THIS NON-SOLUTION
-}
+/*
+You don’t have root, so make new root node, give it a value.
 
+Then:
+for all other values to be inserted, check if it’s greater than or less than the current parent. If less, insert left. If greater, insert right.
+*/
+bool IntBST::insert(int value) {
+  if (root == nullptr) { //root null
+    root = new Node; //allocate memory
+    root->info = value; //give it value
+    return true; //added to empty tree
+  }
+  return insert(value, root); //start from root
+}
 // recursive helper for insert (assumes n is never 0)
 bool IntBST::insert(int value, Node *n) {
-    return false; // REPLACE THIS NON-SOLUTION
-}
+  if (value < n->info) { //left child case
+    if (n->left == nullptr) { //oops can't go down
+      n->left = new Node; //allocate mem
+      n->left->info = value; //give val
+      return true; //we added
+    }
+    return insert(value, n->left); //insert left (go all the way)
+  } else if (value > n->info) { //greater case
+    if (n->right == nullptr) { //can't recurse anymore
+      n->right = new Node; //free mem
+      n->right->info = value; //val
+      return true; //addded
+    }
+    return insert(value, n->right); //go down right all the way
+  } else { //duplicate case
+    return false; //false
+  }
+} 
+  
+
 
 // print tree data pre-order
 void IntBST::printPreOrder() const {
-    cout << "IMPLEMENT printPreOrder public method";; // IMPLEMENT HERE
+  printPreOrder(root); //start from root
 }
 
 // recursive helper for printPreOrder()
 void IntBST::printPreOrder(Node *n) const {
-    cout << "IMPLEMENT printPreOrder private helper method"; // IMPLEMENT HERE
+  if (n == nullptr) { //null node
+    return; //exit
+  }
+  cout << n->info << " "; //node
+  printPreOrder(n->left); //left
+  printPreOrder(n->right); //right
 }
 
 // print tree data in-order, with helper
 void IntBST::printInOrder() const {
-    cout << "IMPLEMENT printInOrder public method"; // IMPLEMENT HERE
+  printInOrder(root); //start from root
 }
 void IntBST::printInOrder(Node *n) const {
-    cout << "IMPLEMENT IMPLEMENT printInOrder private helper method"; // IMPLEMENT HERE
+  if (n == nullptr) { //null node
+    return; //exit
+  }
+  printInOrder(n->left); //left
+  cout << n->info << " "; //node
+  printInOrder(n->right); //right
 }
 
 // prints tree data post-order, with helper
 void IntBST::printPostOrder() const {
-    cout << "IMPLEMENT printPostOrder public method"; // IMPLEMENT HERE
+  printPostOrder(root); //from root
 }
 
 void IntBST::printPostOrder(Node *n) const {
-    cout << "IMPLEMENT printPostOrder private helper method";// IMPLEMENT HERE
+  if (n == nullptr) { //null node! (base case)
+    return; //exit
+  }
+  printPostOrder(n->left); //left
+  printPostOrder(n->right); //right
+  cout << n->info << " "; //node
 }
 
 // return sum of values in tree
