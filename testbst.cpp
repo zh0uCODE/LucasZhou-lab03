@@ -13,7 +13,15 @@ int getTest();
 int main() {
 
     IntBST bst1, bst2;
-
+    /*my test
+    IntBST bst3;
+    bst3.insert(5);
+    bst3.insert(10);
+    bst3.insert(20);
+    int v = bst3.getPredecessor(20);
+    cout << "my pred is: " << v << endl;
+    exit(0);
+    */
     // insert data to bst1
     bst1.insert(64);
     bst1.insert(128);
@@ -95,8 +103,8 @@ int main() {
             (bst1.contains(17) ? "Y" : "N") << endl;
         cout << "  contains 512? " <<
             (bst1.contains(512) ? "Y" : "N") << endl;
-	cout << "  pre-order: ";
-        bst1.printPreOrder();
+	cout << "  in-order: ";
+        bst1.printInOrder();
         cout << endl;
     }
 
