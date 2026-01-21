@@ -1,6 +1,6 @@
 // intbst.cpp
 // Implements class IntBST
-// YOUR NAME(S), DATE
+// Lucas Zhou, 1/20/2026
 
 #include "intbst.h"
 
@@ -253,12 +253,20 @@ bool IntBST::remove(int value){
       p->left = n->left; //p's left is connected to n's left
       delete n; //can delete n safely
       return true; //true
+    } else if (p->right == n) {  //n is to the right of p
+      p->right = n->left; //reconnect p's right to n's left
+      delete n; // safe delete n
+      return true; //deleted
     }
   } else if (n->left == nullptr && n->right != nullptr) { //one child, right case
     if (p->right == n) { //p's right needs to be n to be in a "straight" line
       p->right = n->right; //p's right links to right node after n;
       delete n; //n safely deleted
       return true; //true
+    } else if (p->left == n) { //n still has right child, but parent's left is still n
+      p->left = n->right; //relink parent to n's child
+      delete n; //safe delete n
+      return true; //successful delete
     }
   } else { //two children case
     Node* s_rem = getSuccessorNode(n->info); //save a successor node to be deleted (make it value)
