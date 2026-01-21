@@ -256,16 +256,18 @@ bool IntBST::remove(int value){
   } else if (n->left != nullptr && n->right == nullptr) { //one child, left case
     if (n == root) { //n is the root?
       Node* lc = n->left; //left child
-      n->info = lc->info; //update the current node data with data of left child
-      n->left = lc->left; //link n's left pointer to one after lc
-      delete lc; //delete lc (n is already updated)
-      return true; //return true
+      lc->parent = nullptr; //break the child!
+      delete root; //delete the root
+      root = lc; //update root with child position
+      return true; //deleted root
     } else if (p->left == n) { //p's left needs to be n to be in a "straight" line
       p->left = n->left; //p's left is connected to n's left
-      delete n; //can delete n safely
+      n->left->parent = p; //link back
+      delete n; //safe delete
       return true; //true
     } else if (p->right == n) {  //n is to the right of p
       p->right = n->left; //reconnect p's right to n's left
+      n->left->parent = p; //link back child to parent
       delete n; // safe delete n
       return true; //deleted
     }
