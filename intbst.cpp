@@ -239,6 +239,9 @@ bool IntBST::remove(int value){
   } 
   Node* p = n->parent; //parent node of n assigned
   if (n->left == nullptr && n->right == nullptr) { //no children
+    if (n == root) { //n is the root
+      delete n; //just delete that one node
+    };
     if (p->left == n) { //if parent's left is n
       p->left = nullptr; //parent's left links to nullptr
       delete n; //n is deleted
