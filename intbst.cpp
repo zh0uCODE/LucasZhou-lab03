@@ -249,13 +249,17 @@ bool IntBST::remove(int value){
       return true; //true
     }
   } else if (n->left != nullptr && n->right == nullptr) { //one child, left case
-    p->left = n->left; //p's left is connected to n's left
-    delete n; //can delete n safely
-    return true; //true
+    if (p->left == n) { //p's left needs to be n to be in a "straight" line
+      p->left = n->left; //p's left is connected to n's left
+      delete n; //can delete n safely
+      return true; //true
+    }
   } else if (n->left == nullptr && n->right != nullptr) { //one child, right case
-    p->right = n->right; //p's right links to right node after n;
-    delete n; //n safely deleted
-    return true; //true
+    if (p->right == n) { //p's right needs to be n to be in a "straight" line
+      p->right = n->right; //p's right links to right node after n;
+      delete n; //n safely deleted
+      return true; //true
+    }
   } else { //two children case
     Node* s_rem = getSuccessorNode(n->info); //save a successor node to be deleted (make it value)
     n->info = s_rem->info; //replace n's info with successor's info
@@ -273,5 +277,3 @@ bool IntBST::remove(int value){
     return true; //true returned
   }
 }
-//all good!  
-

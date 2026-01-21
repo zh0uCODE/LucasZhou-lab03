@@ -132,8 +132,6 @@ int main() {
 
     // add tests for optional methods that you attempt to implement
     // but don't do that until after submitting the basic version
-
-    return 0;
 }
 
 int getTest() {
